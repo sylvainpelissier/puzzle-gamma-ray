@@ -188,11 +188,10 @@ fn main() {
 
     /* Enter your solution here */
 
-    //secret_hack = MNT6BigFr::MODULUS - secret_hack;
-    let secret_hack: MNT4BigFr = MontFp!("2051652499764529898415644247353890890773010050586264624806163112346867261543339881636871816273939291719073984516544644676930418411289467245195740688456706426581796567579151128456253962325641729007702608627489987576484470733106");
-    
+    let q: MNT4BigFr = MNT6BigFr::MODULUS.into();
+    let mut secret_hack: MNT4BigFr = leaked_secret.into();
+    secret_hack = q - secret_hack;
     let nullifier_hack = <LeafH as CRHScheme>::evaluate(&leaf_crh_params, vec![secret_hack]).unwrap();
-    
     /* End of solution */
 
     assert_ne!(nullifier, nullifier_hack);
